@@ -23,7 +23,10 @@ class App extends Component {
             <section className="navbar-center"></section>
             <section className="navbar-section">
               <Link to="/about">About</Link>
-              <a href="#" className="btn btn-link">
+              <a
+                href="https://github.com/ramigb/playlist"
+                className="btn btn-link"
+              >
                 GitHub
               </a>
             </section>
