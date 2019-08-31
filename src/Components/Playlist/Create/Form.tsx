@@ -96,7 +96,7 @@ const Form = () => {
                   placeholder="Final URL"
                   value={encodedPage}
                 />
-                <a href={encodedPage} target="_blank" rel="noopener noreferrer">
+                <a href={encodedPage} target="_blank">
                   Your PlayList Page
                 </a>
               </>
