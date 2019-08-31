@@ -4,7 +4,7 @@ import { PlayListLink } from "../../Types";
 import { extractVideoID } from "../../../Utils/Links";
 import Input from "../../Common/Input";
 import TextArea from "../../Common/TextArea";
-import { Box, Grid } from "grommet";
+import { Box, Grid, ResponsiveContext } from "grommet";
 import { b64EncodeUnicode } from "../../../Utils/Base64";
 
 // TODO : Refactor the hell out of this monster ...
@@ -48,59 +48,67 @@ const Form = () => {
   }, [info, title, links]);
 
   return (
-    <Grid
-      areas={[
-        { name: "form", start: [0, 0], end: [0, 0] },
-        { name: "list", start: [1, 0], end: [1, 0] }
-      ]}
-      columns={["flex"]}
-      rows={["flex"]}
-      gap="small"
-    >
-      <Box gridArea="form">
-        <Input
-          placeholder="Title"
-          onChange={e => setTitle(e.currentTarget.value)}
-        />
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Grid
+          areas={[
+            { name: "form", start: [0, 0], end: [0, 0] },
+            { name: "list", start: [1, 0], end: [1, 0] }
+          ]}
+          columns={size === "small" ? ["full"] : ["2/2", "2/2"]}
+          rows={["flex"]}
+          gap={size === "small" ? "none" : "small"}
+        >
+          <Box gridArea="form">
+            <Input
+              placeholder="Title"
+              onChange={e => setTitle(e.currentTarget.value)}
+            />
 
-        <TextArea
-          placeholder="info"
-          onChange={e => setInfo(e.currentTarget.value)}
-        />
+            <TextArea
+              placeholder="info"
+              onChange={e => setInfo(e.currentTarget.value)}
+            />
 
-        <h6>
-          For now only YouTube Links will work ... Soon will support Soundcloud
-          and vimeo as well ...
-        </h6>
+            <h6>
+              For now only YouTube Links will work ... Soon will support
+              Soundcloud and vimeo as well ...
+            </h6>
 
-        <div className="input-group">
-          <Input
-            placeholder="Link"
-            myRef={linkInputRef}
-            onKeyPress={handleLinkKeyPress}
-          />
-          <button
-            className="btn btn-primary input-group-btn"
-            onClick={handleAddLinkClick}
-          >
-            Add
-          </button>
-        </div>
+            <div className="input-group">
+              <Input
+                placeholder="Link"
+                myRef={linkInputRef}
+                onKeyPress={handleLinkKeyPress}
+              />
+              <button
+                className="btn btn-primary input-group-btn"
+                onClick={handleAddLinkClick}
+              >
+                Add
+              </button>
+            </div>
 
-        {encodedPage.length > 0 && (
-          <>
-            <TextArea readOnly placeholder="Final URL" value={encodedPage} />
-            <a href={encodedPage} target="_blank" rel="noopener noreferrer">
-              Your PlayList Page
-            </a>
-          </>
-        )}
-      </Box>
+            {encodedPage.length > 0 && (
+              <>
+                <TextArea
+                  readOnly
+                  placeholder="Final URL"
+                  value={encodedPage}
+                />
+                <a href={encodedPage} target="_blank" rel="noopener noreferrer">
+                  Your PlayList Page
+                </a>
+              </>
+            )}
+          </Box>
 
-      <Box gridArea="list">
-        <List links={links} />
-      </Box>
-    </Grid>
+          <Box gridArea="list">
+            <List links={links} />
+          </Box>
+        </Grid>
+      )}
+    </ResponsiveContext.Consumer>
   );
 };
 
