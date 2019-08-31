@@ -29,7 +29,7 @@ const Form = () => {
   };
 
   const handleLinkKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.charCode != 13) return;
+    if (event.charCode !== 13) return;
     handleAddLinkClick();
   };
 
@@ -40,33 +40,13 @@ const Form = () => {
   };
 
   useEffect(() => {
+    if(!links.length) return
     encodePage();
   }, [info, title, links]);
 
   return (
-    <div className="columns">
-      <div className="column col-6">
-        <h3>YouTube Links</h3>
-        <h6>Soon will support Soundcloud and vimeo as well ...</h6>
-        <div className="input-group">
-          <input
-            className="form-input"
-            type="text"
-            placeholder="link"
-            ref={linkInputRef}
-            onKeyPress={handleLinkKeyPress}
-          />
-          <button
-            className="btn btn-primary input-group-btn"
-            onClick={handleAddLinkClick}
-          >
-            Add
-          </button>
-        </div>
-        <List links={links} />
-      </div>
-
-      <div className="column col-6">
+    <div>
+      <div>
         <h3>Title and Info</h3>
         <div className="form-group">
           <input
@@ -102,6 +82,27 @@ const Form = () => {
             </a>
           </>
         )}
+      </div>
+
+      <div>
+        <h3>YouTube Links</h3>
+        <h6>Soon will support Soundcloud and vimeo as well ...</h6>
+        <div className="input-group">
+          <input
+            className="form-input"
+            type="text"
+            placeholder="link"
+            ref={linkInputRef}
+            onKeyPress={handleLinkKeyPress}
+          />
+          <button
+            className="btn btn-primary input-group-btn"
+            onClick={handleAddLinkClick}
+          >
+            Add
+          </button>
+        </div>
+        <List links={links} />
       </div>
     </div>
   );
