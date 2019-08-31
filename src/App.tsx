@@ -8,6 +8,9 @@ import { Page } from "./Components/Pages";
 import { Box, Button, Heading, Grommet } from "grommet";
 import { AddCircle, Github, StatusInfo } from "grommet-icons";
 import styled from "styled-components";
+import ReactGA from "react-ga";
+ReactGA.initialize("UA-146751022-1");
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const theme = {
   global: {
