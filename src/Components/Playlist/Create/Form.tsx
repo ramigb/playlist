@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import List from "../List";
 import { PlayListLink } from "../../Types";
 import { extractVideoID } from "../../../Utils/Links";
+import Input from "../../Common/Input";
+import TextArea from "../../Common/TextArea";
 
 // TODO : Refactor the hell out of this monster ...
 
@@ -40,7 +42,7 @@ const Form = () => {
   };
 
   useEffect(() => {
-    if(!links.length) return
+    if (!links.length) return;
     encodePage();
   }, [info, title, links]);
 
@@ -48,35 +50,19 @@ const Form = () => {
     <div>
       <div>
         <h3>Title and Info</h3>
-        <div className="form-group">
-          <input
-            className="form-input"
-            type="text"
-            placeholder="title"
-            onChange={e => setTitle(e.currentTarget.value)}
-          />
-        </div>
-        <div className="form-group">
-          <textarea
-            className="form-input"
-            placeholder="info"
-            onChange={e => setInfo(e.currentTarget.value)}
-          />
-        </div>
-        <br /> {/* Dude I will fix this shit I promise! */}
-        <br />
+        <Input
+          placeholder="Title"
+          onChange={e => setTitle(e.currentTarget.value)}
+        />
+
+        <TextArea
+          placeholder="info"
+          onChange={e => setInfo(e.currentTarget.value)}
+        />
+
         {encodedPage.length > 0 && (
           <>
-            <div className="form-group">
-              <textarea
-                className="form-input"
-                readOnly
-                placeholder="Final URL"
-                value={encodedPage}
-              />
-            </div>
-            <br />
-            <br />
+            <TextArea readOnly placeholder="Final URL" value={encodedPage} />
             <a href={encodedPage} target="_blank">
               Your PlayList Page
             </a>
@@ -88,12 +74,11 @@ const Form = () => {
         <h3>YouTube Links</h3>
         <h6>Soon will support Soundcloud and vimeo as well ...</h6>
         <div className="input-group">
-          <input
-            className="form-input"
-            type="text"
-            placeholder="link"
-            ref={linkInputRef}
+          <Input
+            placeholder="Link"
+            myRef={linkInputRef}
             onKeyPress={handleLinkKeyPress}
+            onChange={e => setTitle(e.currentTarget.value)}
           />
           <button
             className="btn btn-primary input-group-btn"
