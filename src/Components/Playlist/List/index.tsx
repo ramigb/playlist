@@ -33,7 +33,7 @@ function List(props: OwnProps) {
       <PlayerContainer key={index}>
         <ReactPlayer
           url={urlToLink}
-          light={true}
+          light={preview}
           controls
           height="100%"
           width="100%"

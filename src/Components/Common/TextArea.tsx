@@ -11,9 +11,9 @@ type Props = {
 const TextArea = (props: Props) => {
   const {
     className = "form-input",
-    onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => null,
-    placeholder = "",
-    value = "",
+    onChange,
+    placeholder,
+    value,
     readOnly = false
   } = props;
   return (
@@ -21,8 +21,8 @@ const TextArea = (props: Props) => {
       className={className}
       onChange={onChange}
       placeholder={placeholder}
+      value={value}
       readOnly={readOnly}
-      defaultValue={value}
     ></textarea>
   );
 };

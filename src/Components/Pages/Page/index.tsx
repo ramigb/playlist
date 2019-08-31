@@ -1,7 +1,8 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Link, match } from "react-router-dom";
+import { match } from "react-router-dom";
 import List from "../../Playlist/List";
 import { PlayListLink } from "../../Types";
+import { b64DecodeUnicode } from "../../../Utils/Base64";
 
 interface OwnProps {
   match?: match<any>;
@@ -11,10 +12,10 @@ function Page(props: OwnProps) {
   const { match } = props;
   const decodedPage =
     match && match.params && match.params.encodedPage
-      ? JSON.parse(atob(match.params.encodedPage))
+      ? JSON.parse(b64DecodeUnicode(match.params.encodedPage))
       : false;
 
-  console.log(decodedPage);
+  console.log("D", decodedPage);
   if (!decodedPage) {
     return null;
   }
@@ -35,7 +36,7 @@ function Page(props: OwnProps) {
       <p>{decodedPage.i}</p>
       <div className="container">
         <div className="columns">
-          <List links={makeLink(decodedPage.l)} preview={false} />
+          <List links={makeLink(decodedPage.l)} preview={true} />
         </div>
       </div>
     </div>

@@ -13,9 +13,9 @@ const Input = (props: Props) => {
   const {
     type = "text",
     className = "form-input",
-    onChange = (e: React.ChangeEvent<HTMLInputElement>) => null,
-    onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => null,
-    placeholder = "",
+    onChange,
+    onKeyPress,
+    placeholder,
     myRef = null
   } = props;
   return (

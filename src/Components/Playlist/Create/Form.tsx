@@ -4,6 +4,8 @@ import { PlayListLink } from "../../Types";
 import { extractVideoID } from "../../../Utils/Links";
 import Input from "../../Common/Input";
 import TextArea from "../../Common/TextArea";
+import { Box, Grid } from "grommet";
+import { b64EncodeUnicode } from "../../../Utils/Base64";
 
 // TODO : Refactor the hell out of this monster ...
 
@@ -35,21 +37,27 @@ const Form = () => {
     handleAddLinkClick();
   };
 
-  const encodePage = () => {
-    let objJsonStr = JSON.stringify(createPage(links, title, info));
-    let objJsonB64 = btoa(objJsonStr);
-    setEncodedPage(window.location.origin + "/p/" + objJsonB64);
-  };
-
   useEffect(() => {
     if (!links.length) return;
+    const encodePage = () => {
+      let objJsonStr = JSON.stringify(createPage(links, title, info));
+      let objJsonB64 = b64EncodeUnicode(objJsonStr);
+      setEncodedPage(window.location.origin + "/p/" + objJsonB64);
+    };
     encodePage();
   }, [info, title, links]);
 
   return (
-    <div>
-      <div>
-        <h3>Title and Info</h3>
+    <Grid
+      areas={[
+        { name: "form", start: [0, 0], end: [0, 0] },
+        { name: "list", start: [1, 0], end: [1, 0] }
+      ]}
+      columns={["flex"]}
+      rows={["flex"]}
+      gap="small"
+    >
+      <Box gridArea="form">
         <Input
           placeholder="Title"
           onChange={e => setTitle(e.currentTarget.value)}
@@ -60,25 +68,16 @@ const Form = () => {
           onChange={e => setInfo(e.currentTarget.value)}
         />
 
-        {encodedPage.length > 0 && (
-          <>
-            <TextArea readOnly placeholder="Final URL" value={encodedPage} />
-            <a href={encodedPage} target="_blank">
-              Your PlayList Page
-            </a>
-          </>
-        )}
-      </div>
+        <h6>
+          For now only YouTube Links will work ... Soon will support Soundcloud
+          and vimeo as well ...
+        </h6>
 
-      <div>
-        <h3>YouTube Links</h3>
-        <h6>Soon will support Soundcloud and vimeo as well ...</h6>
         <div className="input-group">
           <Input
             placeholder="Link"
             myRef={linkInputRef}
             onKeyPress={handleLinkKeyPress}
-            onChange={e => setTitle(e.currentTarget.value)}
           />
           <button
             className="btn btn-primary input-group-btn"
@@ -87,9 +86,21 @@ const Form = () => {
             Add
           </button>
         </div>
+
+        {encodedPage.length > 0 && (
+          <>
+            <TextArea readOnly placeholder="Final URL" value={encodedPage} />
+            <a href={encodedPage} target="_blank" rel="noopener noreferrer">
+              Your PlayList Page
+            </a>
+          </>
+        )}
+      </Box>
+
+      <Box gridArea="list">
         <List links={links} />
-      </div>
-    </div>
+      </Box>
+    </Grid>
   );
 };
 
