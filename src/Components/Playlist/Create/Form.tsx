@@ -47,20 +47,11 @@ const Form = () => {
     encodePage();
   }, [info, title, links]);
 
-  return (
-    <ResponsiveContext.Consumer>
-      {size => (
-        <Grid
-          areas={[
-            { name: "form", start: [0, 0], end: [0, 0] },
-            { name: "list", start: [1, 0], end: [1, 0] }
-          ]}
-          columns={size === "small" ? ["full"] : ["2/2", "2/2"]}
-          rows={["flex"]}
-          gap={size === "small" ? "none" : "small"}
-        >
-          <Box gridArea="form">
-            <Input
+  return (    
+        <div className="columns">
+          <div className="column col-lg-6 col-sm-12" style={{marginBottom: "12px"}}>
+          <Box gap="small">
+            <Input              
               placeholder="Title"
               onChange={e => setTitle(e.currentTarget.value)}
             />
@@ -90,25 +81,23 @@ const Form = () => {
             </div>
 
             {encodedPage.length > 0 && (
-              <>
-                <TextArea
+              <Box gap="small">
+                {/* <TextArea
                   readOnly
                   placeholder="Final URL"
                   value={encodedPage}
-                />
-                <a href={encodedPage} target="_blank">
-                  Your PlayList Page
+                /> */}
+                <a href={encodedPage} className="btn btn-primary" target="_blank">
+                  Open PlayList In a new tab
                 </a>
-              </>
+              </Box>
             )}
           </Box>
-
-          <Box gridArea="list">
-            <List links={links} />
-          </Box>
-        </Grid>
-      )}
-    </ResponsiveContext.Consumer>
+          </div>
+          <div className="column col-lg-6 col-sm-12">            
+            <List links={links} className="column col-12" />            
+          </div>
+        </div>      
   );
 };
 

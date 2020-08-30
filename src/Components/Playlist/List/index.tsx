@@ -4,21 +4,25 @@ import { PlayListLink } from "../../Types";
 import styled from "styled-components";
 
 const PlayerContainer = styled.div`
-  min-height: 320px;
-  min-width: 640px;
-  margin: 8px;
+  height: 320px;  
+  margin-bottom: 8px;
   .react-player__preview {
-    min-height: 320px; /*For some reason 100% doesn't work, FMR? */
+    display: flex;
+  }
+  @media (max-width: 768px) {
+    height: 160px;    
+    width:100%;    
   }
 `;
 
 interface OwnProps {
   links: PlayListLink[];
   preview?: boolean;
+  className?: string;
 }
 
 function List(props: OwnProps) {
-  const { links, preview = true } = props;
+  const { links, preview = true, className="col-12" } = props;
 
   if (!links) return null;
 
@@ -30,13 +34,13 @@ function List(props: OwnProps) {
     if (item.v) urlToLink = item.v;
 
     return (
-      <PlayerContainer key={index}>
+      <PlayerContainer key={index} className={className}>
         <ReactPlayer
           url={urlToLink}
           light={preview}
           controls
-          height="100%"
           width="100%"
+          height="100%"
         />
       </PlayerContainer>
     );

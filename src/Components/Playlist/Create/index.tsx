@@ -3,7 +3,7 @@ import Form from "./Form";
 
 const Create = () => {
   return (
-    <div>
+    <div className="container">
       <h3>
         Create A Playlist{" "}
         <span>

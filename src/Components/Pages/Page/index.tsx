@@ -31,12 +31,12 @@ function Page(props: OwnProps) {
   }
 
   return (
-    <div>
+    <div className="container">
       <h3>{decodedPage.t}</h3>
       <p>{decodedPage.i}</p>
-      <div className="container">
+      <div >
         <div className="columns">
-          <List links={makeLink(decodedPage.l)} preview={true} />
+          <List links={makeLink(decodedPage.l)} preview={true} className="column col-3" />
         </div>
       </div>
     </div>
