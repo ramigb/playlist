@@ -6,7 +6,7 @@ const Create = () => {
     <div className="container">
       <h3>
         Create A Playlist{" "}
-        <span>
+        <span className="subtitle">
           (Or watch a{" "}
           <a
             target="_blank"

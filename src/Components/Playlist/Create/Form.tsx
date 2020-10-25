@@ -8,7 +8,6 @@ import { Box, Grid, ResponsiveContext } from "grommet";
 import { b64EncodeUnicode } from "../../../Utils/Base64";
 
 // TODO : Refactor the hell out of this monster ...
-
 const Form = () => {
   const linkInputRef = useRef<HTMLInputElement>(null);
   const initialLinks: PlayListLink[] = [];
@@ -16,6 +15,7 @@ const Form = () => {
   const [encodedPage, setEncodedPage] = useState("");
   const [info, setInfo] = useState("");
   const [title, setTitle] = useState("");
+  const maxInfoText = 300;
 
   const createPage = (links: PlayListLink[], title: string, info: string) => {
     return {
@@ -53,11 +53,13 @@ const Form = () => {
           <Box gap="small">
             <Input              
               placeholder="Title"
+              maxLength={200}
               onChange={e => setTitle(e.currentTarget.value)}
             />
 
             <TextArea
               placeholder="info"
+              maxLength={200}
               onChange={e => setInfo(e.currentTarget.value)}
             />
 

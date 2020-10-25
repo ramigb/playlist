@@ -7,6 +7,7 @@ type Props = {
   myRef?: React.Ref<HTMLInputElement>;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  maxLength?: number;
 };
 
 const Input = (props: Props) => {
@@ -16,16 +17,29 @@ const Input = (props: Props) => {
     onChange,
     onKeyPress,
     placeholder,
-    myRef = null
+    myRef = null,
+    maxLength = 255
   } = props;
+
+  const _onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const {value} = e.currentTarget
+    console.log(value.length)
+    if(value.length >= maxLength){
+      e.currentTarget.value = value.substring(0,maxLength);
+      return null;
+    }    
+    onChange && onChange(e);
+  }
+
   return (
     <input
       className={className}
       type={type}
-      onChange={onChange}
+      onChange={_onChange}
       placeholder={placeholder}
       onKeyPress={onKeyPress}
       {...(myRef && { ref: myRef })}
+      maxLength={maxLength}
     />
   );
 };
